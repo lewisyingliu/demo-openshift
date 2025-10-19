@@ -1,9 +1,9 @@
-FROM registry.access.redhat.com/ubi8/openjdk-17-devel:latest AS build
+FROM registry.access.redhat.com/ubi8/openjdk-17-devel AS build
 WORKDIR /app
 COPY --chown=gradle:gradle . /app
 RUN gradle clean build -x test
 
-FROM registry.access.redhat.com/ubi8/openjdk-17-runtime:latest
+FROM registry.access.redhat.com/ubi8/openjdk-17-runtime
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 EXPOSE 8085
