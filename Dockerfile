@@ -1,11 +1,11 @@
-FROM gradle:jdk17-alpine AS build
+FROM registry.access.redhat.com/ubi8/openjdk-17-devel AS build
 WORKDIR /app
 COPY --chown=gradle:gradle . /app
 RUN gradle clean build -x test
 
 # Stage 2: Create the final image
-FROM openjdk:17
+FROM registry.access.redhat.com/ubi8/openjdk-17-runtime
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
-EXPOSE 8080
+EXPOSE 8085
 ENTRYPOINT ["java", "-jar", "app.jar"]
