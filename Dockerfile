@@ -1,4 +1,11 @@
+FROM gradle:jdk17-alpine AS build
+WORKDIR /app
+COPY --chown=gradle:gradle . /app
+RUN gradle clean build -x test
+
+# Stage 2: Create the final image
 FROM openjdk:17
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
