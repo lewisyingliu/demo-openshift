@@ -23,6 +23,7 @@ public class SecurityConfiguration {
                         authorizeRequests
                                 .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .requestMatchers("/ping/**").permitAll()
+                                .requestMatchers("/api/v1/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
