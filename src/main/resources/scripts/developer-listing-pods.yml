@@ -1,0 +1,23 @@
+# Example ClusterRole for listing pods at cluster scope
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-lister-cluster-scope
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list"]
+  ---
+# Example ClusterRoleBinding for user "developer"
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: developer-pod-lister-cluster-scope
+subjects:
+  - kind: User
+    name: developer
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: pod-lister-cluster-scope
+  apiGroup: rbac.authorization.k8s.io

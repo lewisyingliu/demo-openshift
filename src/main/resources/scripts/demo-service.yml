@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-openshift
+spec:
+  selector:
+    app: demo-openshift
+  ports:
+    - port: 8085
+      targetPort: 8085
+      protocol: TCP
+  type: NodePort
